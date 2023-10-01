@@ -52,11 +52,11 @@ Once you're done, make sure you **record a video** showing your project working.
 
 We have a checklist at the bottom of this README file, which you should update as your progress with your assignment. It will help us evaluate your project.
 
-- [ ] My code's working just fine! 🥳
-- [ ] I have recorded a video showing it working and embedded it in the README ▶️
-- [ ] I have tested all the normal working cases 😎
-- [ ] I have even solved some edge cases (brownie points) 💪
-- [ ] I added my very planned-out approach to the problem at the end of this README 📜
+- [x] My code's working just fine! 🥳
+- [x] I have recorded a video showing it working and embedded it in the README ▶️
+- [x] I have tested all the normal working cases 😎
+- [x] I have even solved some edge cases (brownie points) 💪
+- [x] I added my very planned-out approach to the problem at the end of this README 📜
 
 ## Got Questions❓
 Feel free to check the discussions tab, you might get something of help there. Check out that tab before reaching out to us. Also, did you know, the internet is a great place to explore 😛
@@ -65,4 +65,15 @@ Feel free to check the discussions tab, you might get something of help there. C
 
 ### My Approach 🔎
 
-I have google a lot, and read about 100s of articles and youtube videos. From a youtube video, I got to know 
+I have google a lot, and read about 100s of articles and youtube videos. From a ▶️ [youtube video](https://www.youtube.com/watch?v=4bLwqv6XcuQ), I got to know about App Scripts, and how to create Add-ons for google docs, sheets. I started refering these content and articles.
+1. Started with the UI deisgn and finalising the minimal functionalities to have (later also added brownie points 🍪😋)
+2. After this, I setup the code.gs file, and after this, I created the html file for uploading the files and javascript functions to handle it.
+3. After, I created fucntionalities to allow users to upload a CSV file either by selecting it from their device or by dragging and dropping it into the designated area. Once uploaded, I parsed the CSV to read its contents. This will help in previewing the data and letting users select what they want.
+4. I enabled and created div to display the headers of the CSV to the users. This gives them a preview of the data they're about to import. Thus providing the options for users to select specific rows and columns.
+5. After the user made their selection, I imported the data in the active Gooogle Sheets. (Here I have used some *jugaad* - For large datasets, it was not able to insert the values, due to Google App Script limitation. So I used the chunking mechanism, to ensure breaking the data into chunks and inserting them sequentially. This reduced the error rate of uploading and parsing the file.
+
+### Browie Points 🍪
+
+1. Reduced the timing of uploading the large datasets, by using chunking method, in which instead of directly inserting all the data at the same time, I am taking size of 10 and inserting all it at once.
+2. Added the method to populate the data into a chosen Google Sheet, either appending to existing data or creating a new sheet.
+
