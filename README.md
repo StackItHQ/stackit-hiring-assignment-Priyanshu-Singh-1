@@ -77,3 +77,13 @@ I have google a lot, and read about 100s of articles and youtube videos. From a 
 1. Reduced the timing of uploading the large datasets, by using chunking method, in which instead of directly inserting all the data at the same time, I am taking size of 10 and inserting all it at once.
 2. Added the method to populate the data into a chosen Google Sheet, either appending to existing data or creating a new sheet.
 
+### Recorded Video 💪
+
+
+https://github.com/StackItHQ/stackit-hiring-assignment-Priyanshu-Singh-1/assets/107169043/b86ce0fd-f586-4fb5-92fe-b387afe3f1d8
+
+
+[Click Here](https://youtu.be/cADtHXwsFI4?si=XAXoWoAS2XFIBWg3) to watch the working!
+
+**P.S** : In this video, I have explained it little detail, so the video length is little large😫, so I request you to please consider it.
+
