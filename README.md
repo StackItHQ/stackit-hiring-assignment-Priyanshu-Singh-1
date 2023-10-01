@@ -1,6 +1,20 @@
 # InSheet Flow 🧾
-### Elevate Your Sheets, Elevate Your Data! ✨
+### Elevate Your Sheets✨✨, Elevate Your Data! ✨✨
 
+
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/_IojtdoU)
+# StackIt Hiring Assignment
+
+### Welcome to StackIt's hiring assignment! 🚀
+
+**If you didn't get here through github classroom, are you sure you're supposed to be here? 🤨**
+
+
+We are glad to have you here, but before you read what you're going to beat your head over for the next few hours (maybe days?), let's get a few things straight:
+- We really appreciate honesty. Don't copy anyone else's assignment, it'll only sabotage your chances :P
+- You're free to use any stack, and library of your choice. Use whatever you can get your hands on, on the internet!
+- We love out of the box solutions. We prefer to call it *Jugaad* 
+- This might be just the first round, but carries the most importance of all. Give your best, and we hope you have a fun time solving this problem.
 
 ## ✨ **Problem Statement: Crafting a CSV Importer for Google Sheets** ✨
 
@@ -9,6 +23,7 @@ Data analysts around the world 🌍, handle massive amounts of data to derive me
 
 A typical week of an analyst in an e-commerce company 🛒 involves receiving multiple CSV files 📁 containing sales, inventory, customer feedback, and more. The data from these files needs to be meticulously analyzed and presented in the company’s weekly meetings. However, instead of diving directly into analysis, most analysts need to spend an inordinate amount of time just importing and structuring these CSV files into Google Sheets ⏳. This repetitive, time-consuming task reduces the efficiency of these professionals and delays the extraction of crucial insights 😫.
 
+**Today, you are going to make their lives better.**
 
 **Problem Statement**:
 Make a CSV Importer for Google Sheets that lets users drag and drop CSV files onto the Google Sheet. The moment they drop the CSV file, allow them to select which columns to import 🗂️.
@@ -47,4 +62,7 @@ We have a checklist at the bottom of this README file, which you should update a
 Feel free to check the discussions tab, you might get something of help there. Check out that tab before reaching out to us. Also, did you know, the internet is a great place to explore 😛
 
 ## Developer's Section
-*Add your video here, and your approach to the problem (optional). Leave some comments for us here if you want, we will be reading this :)*
+
+### My Approach 🔎
+
+I have google a lot, and read about 100s of articles and youtube videos. From a youtube video, I got to know 

@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <base target="_top">
+    <?!= include('Style'); ?>
+  </head>
+  
+  <body>
+    <!-- Main body  -->
+    <div id="main_page">
+      <h4> Welcome To The InSheet Flow!🗂️</h4>
+
+      <!-- Drop Down Area For File Upload -->
+      <div id="dropZone">
+        <span id="uploadedFileName"></span>
+        <h6>Drag & Drop CSV File Here</h6>
+        <br>
+        <input type="file" id="csvFile" accept=".csv">
+        <label for="csvFile">Choose a file</label>
+      </div>
+
+      <br>
+      <!-- Upload button -->
+      <button onclick="handleFile()">Upload</button>
+    </div>
+    
+    <!-- For displaying the columns, intially kept hidden -->
+    <div id="columnSelection" style="display:none;">
+      <h5>Select Columns to Import:</h5>
+      <div id="columnCheckboxes"></div>
+      <button onclick="applyColumnSelection()">Continue</button>
+    </div>
+
+    <!-- Same for choice -->
+    <div id="sheetSelection" style="display:none;">
+      <h5>Choose where to import data:</h5>
+      <input type="radio" id="appendData" name="sheetChoice" value="append" checked>
+      <label for="appendData">Append to current sheet 📥</label><br>
+      <input type="radio" id="newSheet" name="sheetChoice" value="new">
+      <label for="newSheet">Create a new sheet 📋</label><br>
+      <button onclick="sendDataToSheet()">Import Data</button>
+    </div>
+    
+    <?!= include('Javascript'); ?>
+  
+  </body>
+</html>

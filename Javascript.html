@@ -1,0 +1,209 @@
+<script>
+
+        // For storing the name of the cuurent file
+        var uploadedFileData = "";
+  
+        // Function to handle CSV file, and extract the data, segregating the heading, and data
+        function handleFile() {
+          var fileInput = document.getElementById('csvFile');
+          var file = fileInput.files[0];
+          var reader = new FileReader();
+          
+          reader.onload = function(e) { //A function to check the type of delimeter present in the csv file
+            var data = e.target.result;
+  
+            var csvLines = data.split(/\r?\n/);
+  
+            // Determine the delimiter
+            var delimiter;
+            if (csvLines[0].indexOf("\t") !== -1) {
+              delimiter = "\t";  // Tab-separated
+            } else if (csvLines[0].indexOf(",") !== -1) {
+              delimiter = ",";   // Comma-separated
+            } else {
+              alert("Unknown format. Expected tab-separated or comma-separated values.");
+              return;
+            }
+            var headers = csvLines[0].split(",");
+            displayColumnOptions(headers);
+            
+          };
+          
+          reader.readAsText(file);
+        }
+  
+        // After handling the file, this function is used to extract the columns which is present in the file
+        // and will allow the option to choose which specific columns to import
+  
+        function displayColumnOptions(headers) {
+          var columnCheckboxesDiv = document.getElementById('columnCheckboxes'); //Container for Displaying the columns (initially hidden)
+  
+          // Clear previous checkboxes
+          columnCheckboxesDiv.innerHTML = ''; //Every time a new file is updated, the previous options choosed should be clear
+  
+          // Add "ALL" checkbox (if selected, all the columns of the file will be marked checked)
+          var allCheckboxContainer = document.createElement('div');
+          allCheckboxContainer.className = 'checkbox-container';
+  
+          var allCheckbox = document.createElement('input'); //Creating elememt for All check box
+          allCheckbox.type = "checkbox";
+          allCheckbox.id = "selectAll";
+  
+          var allLabel = document.createElement('label'); //Creating element for the Text COntent "ALL"
+          allLabel.htmlFor = "selectAll";
+          allLabel.appendChild(document.createTextNode("ALL"));
+  
+          // Appending it to the options, along with the columns
+          allCheckboxContainer.appendChild(allCheckbox);
+          allCheckboxContainer.appendChild(allLabel);
+          columnCheckboxesDiv.appendChild(allCheckboxContainer);
+  
+          // Add event listener to "ALL" checkbox to check/uncheck all columns
+          allCheckbox.addEventListener('change', function() {
+              var state = this.checked;
+              headers.forEach(function(_, index) {
+                  document.getElementById("col_" + index).checked = state;
+              });
+          });
+          
+          // Creating each individual columns checkboxes based on headers from CSV
+          headers.forEach(function(header, index) {
+            var checkboxContainer = document.createElement('div');
+            checkboxContainer.className = 'checkbox-container';
+  
+            var checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+            checkbox.id = "col_" + index;
+            checkbox.value = index;
+  
+            var label = document.createElement('label');
+            label.htmlFor = "col_" + index;
+            label.appendChild(document.createTextNode(header));
+  
+            checkboxContainer.appendChild(checkbox);
+            checkboxContainer.appendChild(label);
+            columnCheckboxesDiv.appendChild(checkboxContainer);
+          });
+  
+          // Making it Visible
+          document.getElementById('columnSelection').style.display = 'block';
+        }
+  
+        // This function filters the CSV data based on the columns selected by the user.
+        function applyColumnSelection() {
+            // Split the uploaded data into lines
+            var csvLines = uploadedFileData.split("\n");
+            var selectedColumns = [];
+  
+            // Identify which columns are selected by the user
+            csvLines[0].split(",").forEach(function(_, index) {
+                if (document.getElementById("col_" + index).checked) {
+                    selectedColumns.push(index);
+                }
+            });
+  
+            // Filter the CSV data based on the selected columns
+            var filteredData = csvLines.map(function(line) {
+                var cells = line.split(",");
+                return selectedColumns.map(function(colIndex) {
+                    return cells[colIndex];
+                }).join(",");
+            }).join("\n");
+  
+            // Update the UI to hide column selection and show sheet selection
+            document.getElementById('columnSelection').style.display = 'none';
+            document.getElementById('sheetSelection').style.display = 'block';
+  
+        }
+  
+        function sendDataToSheet() {
+            // Get user's choice for data import (new sheet or append to existing)
+            var choice = document.querySelector('input[name="sheetChoice"]:checked').value;
+  
+            // Reuse the logic from applyColumnSelection to get filtered data
+            var csvLines = uploadedFileData.split("\n");
+            var selectedColumns = [];
+  
+            // Get selected columns
+            csvLines[0].split(",").forEach(function(_, index) {
+                if (document.getElementById("col_" + index).checked) {
+                    selectedColumns.push(index);
+                }
+            });
+  
+            var filteredData = csvLines.map(function(line) {
+                var cells = line.split(",");
+                return selectedColumns.map(function(colIndex) {
+                    return cells[colIndex];
+                }).join(",");
+            }).join("\n");
+  
+            // Send the filtered data to Google Sheets
+            google.script.run.withSuccessHandler(function() {
+                google.script.host.close();
+            }).importDataToSheet(filteredData, choice);
+        }
+  
+        // Event listeners for drag and drop functionality
+        document.getElementById('dropZone').addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.dataTransfer.dropEffect = 'copy';
+        });
+  
+        document.getElementById('dropZone').addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+  
+            var file = e.dataTransfer.files[0];
+            if (file && file.type === "text/csv") {
+                handleFileUpload(file);
+            } else {
+                alert('Please drop a valid CSV file.');
+            }
+        });
+  
+        //Handle the uploaded file, read its contents, and display column options, if the user wants to change the file
+        function handleFileUpload(file) {
+            var reader = new FileReader();
+  
+            var columnSelection = document.getElementById('columnSelection');
+            var columnCheckboxesDiv = document.getElementById('columnCheckboxes');
+  
+            columnSelection.style.display = 'none'; // Hide the column selection div
+            columnCheckboxesDiv.innerHTML = ''; // and responses of checkbox should be cleared
+  
+            reader.onload = function(e) {
+                uploadedFileData = e.target.result;  // Store the file data globally
+  
+                var csvLines = uploadedFileData.split("\n");
+                var headers = csvLines[0].split(",");
+                displayColumnOptions(headers);
+  
+                // Display the uploaded file name
+                var uploadedFileName = document.getElementById('uploadedFileName');
+                uploadedFileName.innerHTML = "Uploaded: " + file.name + " <button onclick='resetDropZone()'>Change File</button>";
+            };
+  
+            reader.readAsText(file);
+        }
+  
+        function resetDropZone() {
+  
+          var uploadedFileName = document.getElementById('uploadedFileName');
+          var columnSelection = document.getElementById('columnSelection');
+          var columnCheckboxesDiv = document.getElementById('columnCheckboxes');
+          uploadedFileName.innerHTML = '';
+          columnSelection.style.display = 'none';
+          columnCheckboxesDiv.innerHTML = ''; 
+        
+        }
+  
+        // To Handle the file input change event.
+        function handleFile() {
+            var fileInput = document.getElementById('csvFile');
+            var file = fileInput.files[0];
+            handleFileUpload(file);
+        }
+  
+      </script>
